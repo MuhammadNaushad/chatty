@@ -1,4 +1,4 @@
-package com.chatty
+package com.shad.chattyhatty
 
 import android.app.Application
 import com.facebook.react.PackageList

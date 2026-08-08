@@ -1,4 +1,4 @@
-package com.chatty
+package com.shad.chattyhatty
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

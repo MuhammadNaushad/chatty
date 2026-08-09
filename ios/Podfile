@@ -16,6 +16,8 @@ end
 
 pod 'FirebaseCoreInternal', :modular_headers => true
 pod 'GoogleUtilities', :modular_headers => true
+
+use_frameworks! :linkage => :dynamic
 target 'chatty' do
   config = use_native_modules!
 

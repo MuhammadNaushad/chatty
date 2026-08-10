@@ -12,17 +12,12 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import { useNotification } from './src/notification/notificationHelper';
+import GoogleSigninExample from './src/google_signin/Google_Sign_In';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
   useNotification();
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
+  return <GoogleSigninExample />;
 }
 
 function AppContent() {
@@ -30,10 +25,10 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
+      {/* <NewAppScreen
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
-      />
+      /> */}
     </View>
   );
 }

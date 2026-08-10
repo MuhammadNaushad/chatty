@@ -1,6 +1,6 @@
-import { PermissionsAndroid } from 'react-native';
+import { Alert, PermissionsAndroid } from 'react-native';
 
-import { getMessaging } from '@react-native-firebase/messaging';
+import { getMessaging, onMessage } from '@react-native-firebase/messaging';
 import { useEffect } from 'react';
 
 const requestUserPermission = async () => {
@@ -26,5 +26,15 @@ const getToken = async () => {
 export const useNotification = () => {
   useEffect(() => {
     requestUserPermission(), getToken();
+  }, []);
+
+  useEffect(() => {
+    const messaging = getMessaging();
+    const unsubscribe = onMessage(messaging, async remoteMessage => {
+      const messageBody = remoteMessage.notification?.body ?? '';
+      const messageTitle = remoteMessage.notification?.title ?? '';
+      Alert.alert(messageTitle, JSON.stringify(messageBody));
+    });
+    return unsubscribe;
   }, []);
 };

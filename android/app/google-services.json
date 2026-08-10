@@ -12,7 +12,20 @@
           "package_name": "com.shad.chattyhatty"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "465705928069-5cr4vpdqbhol438f7nfbjkdngs1livue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shad.chattyhatty",
+            "certificate_hash": "9b41e42c3f3c1cd3cf1273c3ec1fc2a476f31a4c"
+          }
+        },
+        {
+          "client_id": "465705928069-502tdo0ot2iu5mvhg22n6c98bavb1qgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDjV8tCLGMyovnWIWoWQ4MC6rpt1LYwidE"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465705928069-502tdo0ot2iu5mvhg22n6c98bavb1qgu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "465705928069-7ks2peupc9jlkta2nfkum5l46bc44utn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shad.chatty"
+              }
+            }
+          ]
         }
       }
     }

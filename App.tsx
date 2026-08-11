@@ -14,10 +14,21 @@ import {
 import { useNotification } from './src/notification/notificationHelper';
 import GoogleSigninExample from './src/google_signin/Google_Sign_In';
 import ImagePickerExample from './src/image_picker/ImagePicker';
+import { useEffect } from 'react';
+import BootSplash from 'react-native-bootsplash';
 
 function App() {
   // useNotification();
+  useEffect(() => {
+    const init = async () => {
+      // …do multiple sync or async tasks
+    };
 
+    init().finally(async () => {
+      await BootSplash.hide({ fade: true });
+      console.log('BootSplash has been hidden successfully');
+    });
+  }, []);
   return <ImagePickerExample />;
 }
 

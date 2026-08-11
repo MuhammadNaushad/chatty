@@ -13,11 +13,12 @@ import {
 } from 'react-native-safe-area-context';
 import { useNotification } from './src/notification/notificationHelper';
 import GoogleSigninExample from './src/google_signin/Google_Sign_In';
+import ImagePickerExample from './src/image_picker/ImagePicker';
 
 function App() {
-  useNotification();
+  // useNotification();
 
-  return <GoogleSigninExample />;
+  return <ImagePickerExample />;
 }
 
 function AppContent() {

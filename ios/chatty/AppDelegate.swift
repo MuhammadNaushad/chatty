@@ -4,6 +4,7 @@ import React_RCTAppDelegate
 import ReactAppDependencyProvider
 import Firebase
 import RNBootSplash
+import GoogleMaps
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     reactNativeDelegate = delegate
     reactNativeFactory = factory
+    GMSServices.provideAPIKey("AIzaSyCJnVMeWy5uAvIVtOXenF4fdKbMNeoA_Eo") 
   // Add me --- \/
     FirebaseApp.configure()
   // Add me --- /\

@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "a": "react-native run-android",
+    "i": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "b": "react-native run-android && react-native run-ios"
   },
   "dependencies": {
     "@react-native-firebase/app": "^26.1.0",
@@ -18,7 +19,11 @@
     "react-native": "0.86.2",
     "react-native-bootsplash": "^7.3.2",
     "react-native-image-picker": "^8.2.1",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-maps": "^1.29.0",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-size-matters": "^0.4.2",
+    "react-native-svg": "^15.15.5",
+    "react-native-vector-icons": "^10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

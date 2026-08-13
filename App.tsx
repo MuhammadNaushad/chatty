@@ -16,6 +16,7 @@ import GoogleSigninExample from './src/google_signin/Google_Sign_In';
 import ImagePickerExample from './src/image_picker/ImagePicker';
 import { useEffect } from 'react';
 import BootSplash from 'react-native-bootsplash';
+import MapScreen from './src/map/MapExample';
 
 function App() {
   // useNotification();
@@ -29,7 +30,7 @@ function App() {
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
-  return <ImagePickerExample />;
+  return <MapScreen />;
 }
 
 function AppContent() {

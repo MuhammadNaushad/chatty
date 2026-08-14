@@ -1607,7 +1607,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - react-native-safe-area-context (5.8.1):
+  - react-native-safe-area-context (5.9.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1619,8 +1619,8 @@ PODS:
     - React-graphics
     - React-ImageManager
     - React-jsi
-    - react-native-safe-area-context/common (= 5.8.1)
-    - react-native-safe-area-context/fabric (= 5.8.1)
+    - react-native-safe-area-context/common (= 5.9.0)
+    - react-native-safe-area-context/fabric (= 5.9.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -1631,7 +1631,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - react-native-safe-area-context/common (5.8.1):
+  - react-native-safe-area-context/common (5.9.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1653,7 +1653,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - react-native-safe-area-context/fabric (5.8.1):
+  - react-native-safe-area-context/fabric (5.9.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2096,7 +2096,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - RNFBApp (26.1.0):
+  - RNFBApp (26.2.0):
     - Firebase/CoreOnly (= 12.17.0)
     - hermes-engine
     - RCTRequired
@@ -2119,7 +2119,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - RNFBMessaging (26.1.0):
+  - RNFBMessaging (26.2.0):
     - Firebase/Messaging (= 12.17.0)
     - FirebaseCoreExtension (= 12.17.0)
     - hermes-engine
@@ -2576,7 +2576,7 @@ SPEC CHECKSUMS:
   React-mutationobservernativemodule: e450c29376a09a0f6dd23170096f3e46f1ba6d57
   react-native-image-picker: 09cea417bef3ee25008ad21d4426f9a1fc54ad84
   react-native-maps: f6b0ae1b6a4219d835846c2d817abbc2d95bdf50
-  react-native-safe-area-context: 6255354c51cdabe084b19ed7bd2cd9cd6b0f57e2
+  react-native-safe-area-context: ac3d68477a2cb3861f8c0e2e7596b83943180a69
   React-NativeModulesApple: 167e532fb9bae30f3c66636b8ee0092bab263667
   React-networking: e382e6f2f815e801a34a630e708a551c7feb2090
   React-oscompat: db6675ddaef3bddd1b41533627f3d26ec710c05f
@@ -2614,8 +2614,8 @@ SPEC CHECKSUMS:
   ReactNativeDependencies: 2bd6854ade79bf1b60586d1ab7813a389df1b6bf
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RNBootSplash: 896e77f6b01c459249d3259c052ac97a2403a576
-  RNFBApp: b66d017038ebaa6d873b94cbfa191380f2dda2c1
-  RNFBMessaging: 54c47eb6c5018720486027d4d66d12b40333f6ea
+  RNFBApp: 876001a8469437ecb0558f5fbb000543dd6a8f57
+  RNFBMessaging: f68b51060468efa573be86c50441a99e23c1ded0
   RNGoogleSignin: 41b189ae99a41175130c55c88a2985a55f826a14
   RNSVG: 394cfd0518613b144c65ffe69045f827b78a7a7c
   RNVectorIcons: bd88db8836a8611aff4b44f061364c07002a6c2a

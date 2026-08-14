@@ -8,7 +8,12 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "b": "react-native run-android && react-native run-ios"
+    "b": "react-native run-android && react-native run-ios",
+    "g-c-run": "cd android && ./gradlew clean && cd .. && react-native run-android",
+    "g-c": "cd android && ./gradlew clean && cd ..",
+    "pod": "cd ios && pod install && cd ..",
+    "open-xcode": "xed -b ios",
+    "new-blood": "rm -rf node_modules yarn.lock ios/Podfile.lock && yarn install && cd ios && pod install && cd .."
   },
   "dependencies": {
     "@react-native-firebase/app": "^26.1.0",

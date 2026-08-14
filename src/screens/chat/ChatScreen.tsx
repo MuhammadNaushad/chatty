@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import AppHeader from '../../components/header/Header';
+import AppSafeView from '../../components/safe_view/AppSafeView';
+import { AppColors } from '../../styles/colors';
 
 const ChatScreen = () => {
-  console.log('====================================');
-  console.log('Hello Reactotron');
-  console.log('====================================');
   return (
-    <View>
-      <Text>ChatScreen</Text>
-    </View>
+    <AppSafeView statusBarColor={AppColors.black}>
+      <AppHeader />
+    </AppSafeView>
   );
 };
 

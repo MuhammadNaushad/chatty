@@ -31,7 +31,11 @@ function App() {
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
-  return <ChatScreen />;
+  return (
+    <SafeAreaProvider>
+      <ChatScreen />
+    </SafeAreaProvider>
+  );
 }
 
 function AppContent() {

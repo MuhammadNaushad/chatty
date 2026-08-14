@@ -17,6 +17,7 @@ import ImagePickerExample from './src/image_picker/ImagePicker';
 import { useEffect } from 'react';
 import BootSplash from 'react-native-bootsplash';
 import MapScreen from './src/map/MapExample';
+import ChatScreen from './src/screens/chat/ChatScreen';
 
 function App() {
   // useNotification();
@@ -30,7 +31,7 @@ function App() {
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
-  return <MapScreen />;
+  return <ChatScreen />;
 }
 
 function AppContent() {

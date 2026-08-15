@@ -15,6 +15,9 @@ interface MessageProps {
 }
 
 const ChatScreen = () => {
+  console.log('====================================');
+  console.log('Debugger Testing Example');
+  console.log('====================================');
   const messageList: MessageProps[] = [
     {
       id: 1,

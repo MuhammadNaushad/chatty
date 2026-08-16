@@ -25,8 +25,12 @@ const ChatInput = ({
   onSentMsgPress,
 }: ChatInputProps) => {
   const senMessageHandler = () => {
-    if (requestMsg.trim().length > 0) {
-      onSentMsgPress(requestMsg);
+    try {
+      if (requestMsg.trim().length > 0) {
+        onSentMsgPress(requestMsg);
+      }
+    } catch (error) {
+    } finally {
     }
   };
 

@@ -79,22 +79,29 @@ const ChatScreen = () => {
   const [MsgInput, setMsgInput] = useState<string>('');
 
   const onSentMsgPress = () => {
-    console.log('user message', MsgInput);
-    setMessageList(prevMessageList => {
-      console.log(prevMessageList);
-      return [
-        ...prevMessageList,
-        {
-          id: prevMessageList.length + 1,
-          msg: MsgInput,
-          type: SENT,
-        },
-      ];
-    });
+    try {
+      console.log('user message', MsgInput);
+      setMessageList(prevMessageList => {
+        console.log(prevMessageList);
+        return [
+          ...prevMessageList,
+          {
+            id: prevMessageList.length + 1,
+            msg: MsgInput,
+            type: SENT,
+          },
+        ];
+      });
 
-    setTimeout(() => {
-      onResponseReceivedPress('Dont Cry');
-    }, 2000);
+      setTimeout(() => {
+        onResponseReceivedPress('Dont Cry');
+      }, 2000);
+    } catch (error) {
+      setMsgInput('');
+      console.error(error);
+    } finally {
+      setMsgInput('');
+    }
   };
 
   const onResponseReceivedPress = (response: string) => {

@@ -1,4 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  KeyboardAvoidingView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, { useState } from 'react';
 import AppHeader from '../../components/header/Header';
 import AppSafeView from '../../components/safe_view/AppSafeView';
@@ -8,6 +15,8 @@ import ResponseMsgCard from '../../components/cards/ResponseMsgCard';
 import { s } from 'react-native-size-matters';
 import { RESPONSE, SENT } from '../../constants/chat';
 import ChatInput from '../../components/ChatInput';
+import { IS_ANDROID, IS_IOS } from '../../constants/platforms';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface MessageProps {
   id: number;
@@ -63,32 +72,42 @@ const ChatScreen = () => {
   ];
   const [MessageList, setMessageList] = useState<MessageProps[]>(messageList);
 
+  const insets = useSafeAreaInsets();
+  const keyboardOffset = IS_IOS ? insets.top : StatusBar.currentHeight ?? 0;
+
   return (
     <AppSafeView statusBarColor={AppColors.black}>
-      <AppHeader />
-      {/*  */}
-      <FlatList
-        data={messageList}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => {
-          return (
-            <>
-              {item.type === SENT ? (
-                <SentMsgCard message={item.msg} />
-              ) : (
-                <ResponseMsgCard message={item.msg} />
-              )}
-            </>
-          );
-        }}
-        contentContainerStyle={{
-          paddingHorizontal: s(5),
-          paddingVertical: s(20),
-        }}
-      />
-      {/*  */}
-      <ChatInput />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior="padding"
+        keyboardVerticalOffset={keyboardOffset}
+      >
+        <AppHeader />
+        {/*  */}
+        <FlatList
+          data={messageList}
+          style={{ flex: 1 }}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => {
+            return (
+              <>
+                {item.type === SENT ? (
+                  <SentMsgCard message={item.msg} />
+                ) : (
+                  <ResponseMsgCard message={item.msg} />
+                )}
+              </>
+            );
+          }}
+          contentContainerStyle={{
+            paddingHorizontal: s(5),
+            paddingVertical: s(20),
+          }}
+        />
+        {/*  */}
+        <ChatInput />
+      </KeyboardAvoidingView>
     </AppSafeView>
   );
 };

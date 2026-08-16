@@ -1,4 +1,6 @@
 import {
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -9,6 +11,7 @@ import React from 'react';
 import { s, vs } from 'react-native-size-matters';
 import { AppColors } from '../styles/colors';
 import Feather from 'react-native-vector-icons/Feather';
+import { IS_ANDROID } from '../constants/platforms';
 
 const ChatInput = () => {
   return (

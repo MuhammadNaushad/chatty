@@ -39,7 +39,7 @@ const ChatScreen = () => {
       msg: 'Sure! The most common causes are missing `keyExtractor`, incorrect `data` prop, or the list container having no height. Can you share your code?',
       type: RESPONSE,
     },
-    {
+    /* {
       id: 3,
       msg: 'Here it is:\n<FlatList data={items} renderItem={({item}) => <Text>{item.name}</Text>} />',
       type: SENT,
@@ -68,7 +68,7 @@ const ChatScreen = () => {
       id: 8,
       msg: 'Use `onEndReached` and `onEndReachedThreshold` props. Set threshold to `0.5` so it triggers when user is halfway to the bottom, then fetch the next page in the callback.',
       type: RESPONSE,
-    },
+    }, */
   ];
   const [MessageList, setMessageList] = useState<MessageProps[]>(messageList);
 
@@ -77,7 +77,21 @@ const ChatScreen = () => {
 
   const [MsgInput, setMsgInput] = useState<string>('');
 
-  const onSentMsgPress = () => {};
+  const onSentMsgPress = () => {
+    console.log('user message', MsgInput);
+    setMessageList(prevMessageList => {
+      console.log(prevMessageList);
+      return [
+        ...prevMessageList,
+        {
+          id: prevMessageList.length + 1,
+          msg: MsgInput,
+          type: SENT,
+        },
+      ];
+    });
+    console.log(typeof setMessageList);
+  };
 
   return (
     <AppSafeView statusBarColor={AppColors.black}>
@@ -89,7 +103,7 @@ const ChatScreen = () => {
         <AppHeader />
         {/*  */}
         <FlatList
-          data={messageList}
+          data={MessageList}
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.id.toString()}

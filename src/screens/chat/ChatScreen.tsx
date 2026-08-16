@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AppHeader from '../../components/header/Header';
 import AppSafeView from '../../components/safe_view/AppSafeView';
 import { AppColors } from '../../styles/colors';
@@ -110,6 +110,7 @@ const ChatScreen = () => {
     });
   };
 
+  const flatListRef = useRef<FlatList>(null);
   return (
     <AppSafeView statusBarColor={AppColors.black}>
       <KeyboardAvoidingView
@@ -120,6 +121,7 @@ const ChatScreen = () => {
         <AppHeader />
         {/*  */}
         <FlatList
+          ref={flatListRef}
           data={MessageList}
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
@@ -138,6 +140,12 @@ const ChatScreen = () => {
           contentContainerStyle={{
             paddingHorizontal: s(5),
             paddingVertical: s(20),
+          }}
+          onContentSizeChange={() => {
+            flatListRef.current?.scrollToEnd({ animated: true }); // ✅ naya message aate hi scroll
+          }}
+          onLayout={() => {
+            flatListRef.current?.scrollToEnd({ animated: false }); // ✅ pehli baar open ho toh bhi bottom pe
           }}
         />
         {/*  */}

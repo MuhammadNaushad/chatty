@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import { s, vs } from 'react-native-size-matters';
-import { AppColors } from '../styles/colors';
+import { AppColors } from '../../styles/colors';
 import Feather from 'react-native-vector-icons/Feather';
-import { IS_ANDROID } from '../constants/platforms';
+import { IS_ANDROID } from '../../constants/platforms';
 
 interface ChatInputProps {
   requestMsg: string;

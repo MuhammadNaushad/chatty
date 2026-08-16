@@ -14,9 +14,10 @@ import SentMsgCard from '../../components/cards/SentMsgCard';
 import ResponseMsgCard from '../../components/cards/ResponseMsgCard';
 import { s } from 'react-native-size-matters';
 import { RESPONSE, SENT } from '../../constants/chat';
-import ChatInput from '../../components/ChatInput';
+import ChatInput from '../../components/text_input/ChatInput';
 import { IS_ANDROID, IS_IOS } from '../../constants/platforms';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import EmptyChatScreen from '../../components/chat/EmptyChatScreen';
 
 interface MessageProps {
   id: number;
@@ -29,7 +30,7 @@ const ChatScreen = () => {
   console.log('Debugger Testing Example');
   console.log('====================================');
   const messageList: MessageProps[] = [
-    {
+    /* {
       id: 1,
       msg: 'Hello! Can you help me debug this React Native FlatList not rendering?',
       type: SENT,
@@ -38,7 +39,7 @@ const ChatScreen = () => {
       id: 2,
       msg: 'Sure! The most common causes are missing `keyExtractor`, incorrect `data` prop, or the list container having no height. Can you share your code?',
       type: RESPONSE,
-    },
+    }, */
     /* {
       id: 3,
       msg: 'Here it is:\n<FlatList data={items} renderItem={({item}) => <Text>{item.name}</Text>} />',
@@ -120,34 +121,43 @@ const ChatScreen = () => {
       >
         <AppHeader />
         {/*  */}
-        <FlatList
-          ref={flatListRef}
-          data={MessageList}
-          style={{ flex: 1 }}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => {
-            return (
-              <>
-                {item.type === SENT ? (
-                  <SentMsgCard message={item.msg} />
-                ) : (
-                  <ResponseMsgCard message={item.msg} />
-                )}
-              </>
-            );
-          }}
-          contentContainerStyle={{
-            paddingHorizontal: s(5),
-            paddingVertical: s(20),
-          }}
-          onContentSizeChange={() => {
-            flatListRef.current?.scrollToEnd({ animated: true }); // ✅ naya message aate hi scroll
-          }}
-          onLayout={() => {
-            flatListRef.current?.scrollToEnd({ animated: false }); // ✅ pehli baar open ho toh bhi bottom pe
-          }}
-        />
+        {MessageList.length > 0 ? (
+          <FlatList
+            ref={flatListRef}
+            data={MessageList}
+            style={{ flex: 1 }}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({ item }) => {
+              return (
+                <>
+                  {item.type === SENT ? (
+                    <SentMsgCard message={item.msg} />
+                  ) : (
+                    <ResponseMsgCard message={item.msg} />
+                  )}
+                </>
+              );
+            }}
+            contentContainerStyle={{
+              paddingHorizontal: s(5),
+              paddingVertical: s(20),
+            }}
+            onContentSizeChange={() => {
+              if (MessageList.length > 0) {
+                flatListRef.current?.scrollToEnd({ animated: true }); // ✅ naya message aate hi scroll
+              }
+            }}
+            onLayout={() => {
+              if (MessageList.length > 0) {
+                flatListRef.current?.scrollToEnd({ animated: false }); // ✅ pehli baar open ho toh bhi bottom pe
+              }
+            }}
+          />
+        ) : (
+          <EmptyChatScreen />
+        )}
+
         {/*  */}
         <ChatInput
           requestMsg={MsgInput}

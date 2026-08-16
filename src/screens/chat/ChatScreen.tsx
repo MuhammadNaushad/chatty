@@ -7,6 +7,7 @@ import SentMsgCard from '../../components/cards/SentMsgCard';
 import ResponseMsgCard from '../../components/cards/ResponseMsgCard';
 import { s } from 'react-native-size-matters';
 import { RESPONSE, SENT } from '../../constants/chat';
+import ChatInput from '../../components/ChatInput';
 
 interface MessageProps {
   id: number;
@@ -86,6 +87,8 @@ const ChatScreen = () => {
           paddingVertical: s(20),
         }}
       />
+      {/*  */}
+      <ChatInput />
     </AppSafeView>
   );
 };

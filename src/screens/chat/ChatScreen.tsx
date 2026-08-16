@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppHeader from '../../components/header/Header';
 import AppSafeView from '../../components/safe_view/AppSafeView';
 import { AppColors } from '../../styles/colors';
@@ -90,7 +90,24 @@ const ChatScreen = () => {
         },
       ];
     });
-    console.log(typeof setMessageList);
+
+    setTimeout(() => {
+      onResponseReceivedPress('Dont Cry');
+    }, 2000);
+  };
+
+  const onResponseReceivedPress = (response: string) => {
+    setMessageList(prevMessageList => {
+      console.log(prevMessageList);
+      return [
+        ...prevMessageList,
+        {
+          id: messageList.length + 1,
+          msg: response,
+          type: RESPONSE,
+        },
+      ];
+    });
   };
 
   return (

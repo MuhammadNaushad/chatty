@@ -13,11 +13,33 @@ import { AppColors } from '../styles/colors';
 import Feather from 'react-native-vector-icons/Feather';
 import { IS_ANDROID } from '../constants/platforms';
 
-const ChatInput = () => {
+interface ChatInputProps {
+  requestMsg: string;
+  setResponseMsg: (message: string) => void;
+  onSentMsgPress: (message: string) => void;
+}
+
+const ChatInput = ({
+  requestMsg,
+  setResponseMsg,
+  onSentMsgPress,
+}: ChatInputProps) => {
+  const senMessageHandler = () => {
+    if (requestMsg.trim().length > 0) {
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input}></TextInput>
-      <TouchableOpacity style={styles.sendBtn}>
+      <TextInput
+        style={styles.input}
+        value={requestMsg}
+        onChangeText={setResponseMsg}
+        placeholder="Type a message ...."
+        multiline={true}
+        placeholderTextColor={AppColors.black}
+      ></TextInput>
+      <TouchableOpacity style={styles.sendBtn} onPress={senMessageHandler}>
         <Feather name="send" color={AppColors.white} size={16} />
       </TouchableOpacity>
     </View>

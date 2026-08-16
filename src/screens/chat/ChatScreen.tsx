@@ -75,6 +75,10 @@ const ChatScreen = () => {
   const insets = useSafeAreaInsets();
   const keyboardOffset = IS_IOS ? insets.top : StatusBar.currentHeight ?? 0;
 
+  const [MsgInput, setMsgInput] = useState<string>('');
+
+  const onSentMsgPress = () => {};
+
   return (
     <AppSafeView statusBarColor={AppColors.black}>
       <KeyboardAvoidingView
@@ -106,7 +110,11 @@ const ChatScreen = () => {
           }}
         />
         {/*  */}
-        <ChatInput />
+        <ChatInput
+          requestMsg={MsgInput}
+          setResponseMsg={setMsgInput}
+          onSentMsgPress={onSentMsgPress}
+        />
       </KeyboardAvoidingView>
     </AppSafeView>
   );

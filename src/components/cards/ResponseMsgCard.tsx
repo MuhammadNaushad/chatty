@@ -1,16 +1,41 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppColors } from '../../styles/colors';
 import { s, vs } from 'react-native-size-matters';
-
-interface SentMsgCardProps {
+interface ResponseMsgCardProps {
   message: string;
+  animate?: boolean;
+  onHeightChange?: () => void; // ✅ naya prop
 }
 
-const ResponseMsgCard = ({ message }: SentMsgCardProps) => {
+const ResponseMsgCard = ({
+  message,
+  animate = false,
+  onHeightChange,
+}: ResponseMsgCardProps) => {
+  const [displayedText, setDisplayedText] = useState(animate ? '' : message);
+
+  useEffect(() => {
+    if (!animate) return;
+
+    let index = 0;
+    setDisplayedText('');
+
+    const interval = setInterval(() => {
+      index++;
+      setDisplayedText(message.slice(0, index));
+      onHeightChange?.();
+      if (index === message.length) {
+        clearInterval(interval);
+      }
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, [message, animate]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.msg}>{message}</Text>
+      <Text style={styles.msg}>{displayedText}</Text>
     </View>
   );
 };

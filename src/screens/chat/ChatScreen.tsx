@@ -23,6 +23,7 @@ interface MessageProps {
   id: number;
   msg: string;
   type: string;
+  isNew?: boolean;
 }
 
 const ChatScreen = () => {
@@ -94,7 +95,9 @@ const ChatScreen = () => {
       });
 
       setTimeout(() => {
-        onResponseReceivedPress('Dont Cry');
+        onResponseReceivedPress(
+          'Artificial Intelligence (AI) is transforming the way we live, work, and interact with technology. From smart assistants to medical diagnostics, AI is becoming an integral part of modern life.',
+        );
       }, 2000);
     } catch (error) {
       setMsgInput('');
@@ -110,9 +113,10 @@ const ChatScreen = () => {
       return [
         ...prevMessageList,
         {
-          id: messageList.length + 1,
+          id: prevMessageList.length + 1,
           msg: response,
           type: RESPONSE,
+          isNew: true,
         },
       ];
     });
@@ -141,7 +145,13 @@ const ChatScreen = () => {
                   {item.type === SENT ? (
                     <SentMsgCard message={item.msg} />
                   ) : (
-                    <ResponseMsgCard message={item.msg} />
+                    <ResponseMsgCard
+                      message={item.msg}
+                      animate={item.isNew ?? false}
+                      onHeightChange={() => {
+                        flatListRef.current?.scrollToEnd({ animated: false });
+                      }}
+                    />
                   )}
                 </>
               );

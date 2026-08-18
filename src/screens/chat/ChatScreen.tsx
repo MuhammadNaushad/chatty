@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
   StatusBar,
@@ -17,6 +18,7 @@ import { IS_IOS } from '../../constants/platforms';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EmptyChatScreen from '../../components/chat/EmptyChatScreen';
 import { chatWithHistory } from '../../api/http_helper';
+import ThinkingCard from '../../components/cards/ThinkingCard';
 
 interface MessageProps {
   id: number;
@@ -40,6 +42,7 @@ const ChatScreen = () => {
   ]);
   const [MsgInput, setMsgInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isThinking, setIsThinking] = useState<boolean>(false);
 
   const insets = useSafeAreaInsets();
   const keyboardOffset = IS_IOS ? insets.top : StatusBar.currentHeight ?? 0;
@@ -81,10 +84,11 @@ const ChatScreen = () => {
     setChatHistory(updatedHistory);
 
     setIsLoading(true);
+    setIsThinking(true);
 
     try {
       const aiResponse = await chatWithHistory(updatedHistory);
-
+      setIsThinking(false);
       // History mein AI response add karo
       setChatHistory(prev => [
         ...prev,
@@ -98,6 +102,7 @@ const ChatScreen = () => {
           ? 'Rate limit ho gaya, thodi der baad try karo...'
           : 'Kuch gadbad hui, dobara try karo.';
       onResponseReceived(errMsg);
+      setIsThinking(false);
     } finally {
       setIsLoading(false);
     }
@@ -150,7 +155,7 @@ const ChatScreen = () => {
         ) : (
           <EmptyChatScreen />
         )}
-
+        {isThinking && <ThinkingCard />}
         <ChatInput
           requestMsg={MsgInput}
           setResponseMsg={setMsgInput}

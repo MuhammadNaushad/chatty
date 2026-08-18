@@ -1,36 +1,25 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { s, vs } from 'react-native-size-matters';
 import { AppColors } from '../../styles/colors';
 import Feather from 'react-native-vector-icons/Feather';
-import { IS_ANDROID } from '../../constants/platforms';
 
 interface ChatInputProps {
   requestMsg: string;
   setResponseMsg: (message: string) => void;
   onSentMsgPress: (message: string) => void;
+  disabled?: boolean;
 }
 
 const ChatInput = ({
   requestMsg,
   setResponseMsg,
   onSentMsgPress,
+  disabled = false,
 }: ChatInputProps) => {
   const senMessageHandler = () => {
-    try {
-      if (requestMsg.trim().length > 0) {
-        onSentMsgPress(requestMsg);
-      }
-    } catch (error) {
-    } finally {
+    if (requestMsg.trim().length > 0 && !disabled) {
+      onSentMsgPress(requestMsg);
     }
   };
 
@@ -43,9 +32,18 @@ const ChatInput = ({
         placeholder="Type a message ...."
         multiline={true}
         placeholderTextColor={AppColors.black}
-      ></TextInput>
-      <TouchableOpacity style={styles.sendBtn} onPress={senMessageHandler}>
-        <Feather name="send" color={AppColors.white} size={16} />
+        editable={!disabled}
+      />
+      <TouchableOpacity
+        style={[styles.sendBtn, disabled && styles.sendBtnDisabled]}
+        onPress={senMessageHandler}
+        disabled={disabled}
+      >
+        <Feather
+          name={disabled ? 'loader' : 'send'}
+          color={AppColors.white}
+          size={16}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -77,5 +75,9 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.black,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  sendBtnDisabled: {
+    backgroundColor: AppColors.darkGray,
+    opacity: 0.6,
   },
 });

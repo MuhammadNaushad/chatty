@@ -19,13 +19,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		122D52BC61004936B1BD726C /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = chatty/Colors.xcassets; sourceTree = "<group>"; };
+		122D52BC61004936B1BD726C /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = chatty/Colors.xcassets; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chatty/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = chatty/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = chatty/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-chatty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatty.debug.xcconfig"; path = "Target Support Files/Pods-chatty/Pods-chatty.debug.xcconfig"; sourceTree = "<group>"; };
-		4A92319E4DD74C6AAB697BE2 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = chatty/BootSplash.storyboard; sourceTree = "<group>"; };
+		4A92319E4DD74C6AAB697BE2 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = chatty/BootSplash.storyboard; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-chatty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatty.release.xcconfig"; path = "Target Support Files/Pods-chatty/Pods-chatty.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = chatty/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = chatty/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -126,6 +126,7 @@
 				4FD517D44380217A0EA61081 /* [CP-User] [RNFB] Core Configuration */,
 				C22A45B2B7D0601DD600D157 /* [RNFB] Embed Firebase SPM Frameworks */,
 				EC0243592C8B36C0B7F4B356 /* [RNFB] Remove duplicate Firebase/Google SPM binary xcframework signature files */,
+				F5CCFE1C30344267004A80FB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -308,6 +309,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "rm -f \"${CONFIGURATION_BUILD_DIR}\"/GoogleAppMeasurement.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/GoogleAppMeasurementIdentitySupport.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/GoogleAdsOnDeviceConversion.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/FirebaseAnalytics.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/FirebaseFirestoreInternal.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/absl.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/grpc.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/grpcpp.xcframework-ios.signature\nrm -f \"${CONFIGURATION_BUILD_DIR}\"/openssl_grpc.xcframework-ios.signature\n";
+		};
+		F5CCFE1C30344267004A80FB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${SRCROOT}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildXCConfig.rb\" \"${SRCROOT}/..\" \"${SRCROOT}/tmp.xcconfig\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

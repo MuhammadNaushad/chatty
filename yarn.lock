@@ -6395,6 +6395,11 @@ react-native-bootsplash@^7.3.2:
     ts-dedent "^2.2.0"
     xml-formatter "^3.7.0"
 
+react-native-config@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.6.1.tgz#f8428829fda74384484d773fe36820159c559159"
+  integrity sha512-HvKtxr6/Tq3iMdFx5REYZsjCtPi0RxQOMCs15+DqrUPTNFtWHuEuh+zw7fJp+dmuO79YMfdtlsPWIGTHtaXwjg==
+
 react-native-image-picker@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-8.2.1.tgz#1ac7826563cbaa5d5298d9f2acc53c69805e5393"

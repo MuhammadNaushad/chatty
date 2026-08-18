@@ -1,57 +1,63 @@
 import axios from 'axios';
-
 import Config from 'react-native-config';
 
-const HF_API_KEY = Config.HF_API_KEY;
+const GROQ_MODEL = 'groq/compound-mini';
 
-const BASE_URL = 'https://api-inference.huggingface.co/models';
-
-const hfClient = axios.create({
-  baseURL: BASE_URL,
+const groqClient = axios.create({
+  baseURL: 'https://api.groq.com/openai/v1',
   headers: {
-    Authorization: `Bearer ${HF_API_KEY}`,
+    Authorization: `Bearer ${Config.GROQ_API_KEY}`,
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // HF models cold start hone mein time lete hain
+  timeout: 30000,
 });
 
-// ✅ Text Generation (e.g. GPT-2, Mistral, etc.)
-export const generateText = async (
-  modelId: string,
-  prompt: string,
-): Promise<string> => {
-  const response = await hfClient.post(`/${modelId}`, {
-    inputs: prompt,
-    parameters: {
-      max_new_tokens: 200,
-      temperature: 0.7,
-    },
+// ✅ Text Generation / Chat
+export const generateText = async (prompt: string): Promise<string> => {
+  const response = await groqClient.post('/chat/completions', {
+    model: GROQ_MODEL,
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: 500,
+    temperature: 0.7,
   });
-
-  return response.data[0]?.generated_text ?? '';
+  return response.data.choices[0]?.message?.content ?? '';
 };
 
-// ✅ Text Classification (e.g. sentiment)
-export const classifyText = async (
-  modelId: string,
-  text: string,
-): Promise<any[]> => {
-  const response = await hfClient.post(`/${modelId}`, {
-    inputs: text,
-  });
+// ✅ Chat with history (multi-turn conversation)
+interface Message {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
 
-  return response.data;
+export const chatWithHistory = async (messages: Message[]): Promise<string> => {
+  const response = await groqClient.post('/chat/completions', {
+    model: GROQ_MODEL,
+    messages,
+    max_tokens: 500,
+    temperature: 0.7,
+  });
+  return response.data.choices[0]?.message?.content ?? '';
 };
 
-// ✅ Question Answering
-export const questionAnswering = async (
-  modelId: string,
-  question: string,
-  context: string,
+// ✅ Chat with system prompt
+export const chatWithSystemPrompt = async (
+  systemPrompt: string,
+  userMessage: string,
 ): Promise<string> => {
-  const response = await hfClient.post(`/${modelId}`, {
-    inputs: { question, context },
+  const response = await groqClient.post('/chat/completions', {
+    model: GROQ_MODEL,
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userMessage },
+    ],
+    max_tokens: 500,
+    temperature: 0.7,
   });
+  return response.data.choices[0]?.message?.content ?? '';
+};
 
-  return response.data?.answer ?? '';
+// ✅ Available Groq models fetch karo
+export const getAvailableModels = async (): Promise<string[]> => {
+  const response = await groqClient.get('/models');
+  return response.data.data.map((model: any) => model.id);
 };

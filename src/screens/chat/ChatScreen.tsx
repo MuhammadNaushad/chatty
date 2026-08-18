@@ -3,10 +3,8 @@ import {
   KeyboardAvoidingView,
   StatusBar,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AppHeader from '../../components/header/Header';
 import AppSafeView from '../../components/safe_view/AppSafeView';
 import { AppColors } from '../../styles/colors';
@@ -15,9 +13,10 @@ import ResponseMsgCard from '../../components/cards/ResponseMsgCard';
 import { s } from 'react-native-size-matters';
 import { RESPONSE, SENT } from '../../constants/chat';
 import ChatInput from '../../components/text_input/ChatInput';
-import { IS_ANDROID, IS_IOS } from '../../constants/platforms';
+import { IS_IOS } from '../../constants/platforms';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EmptyChatScreen from '../../components/chat/EmptyChatScreen';
+import { chatWithHistory } from '../../api/http_helper';
 
 interface MessageProps {
   id: number;
@@ -26,103 +25,84 @@ interface MessageProps {
   isNew?: boolean;
 }
 
+interface GroqMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
 const ChatScreen = () => {
-  console.log('====================================');
-  console.log('Debugger Testing Example');
-  console.log('====================================');
-  const messageList: MessageProps[] = [
-    /* {
-      id: 1,
-      msg: 'Hello! Can you help me debug this React Native FlatList not rendering?',
-      type: SENT,
-    },
+  const [MessageList, setMessageList] = useState<MessageProps[]>([]);
+  const [chatHistory, setChatHistory] = useState<GroqMessage[]>([
     {
-      id: 2,
-      msg: 'Sure! The most common causes are missing `keyExtractor`, incorrect `data` prop, or the list container having no height. Can you share your code?',
-      type: RESPONSE,
-    }, */
-    /* {
-      id: 3,
-      msg: 'Here it is:\n<FlatList data={items} renderItem={({item}) => <Text>{item.name}</Text>} />',
-      type: SENT,
+      role: 'system',
+      content: 'You are a helpful AI assistant. Answer clearly and concisely.',
     },
-    {
-      id: 4,
-      msg: "Got it! You're missing the `keyExtractor` prop. Add `keyExtractor={(item) => item.id.toString()}` and make sure your parent View has `flex: 1`.",
-      type: RESPONSE,
-    },
-    {
-      id: 5,
-      msg: 'That fixed it, thanks! One more thing — how do I add pull-to-refresh?',
-      type: SENT,
-    },
-    {
-      id: 6,
-      msg: 'Easy! Use the `refreshControl` prop:\n`<FlatList refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />} />`',
-      type: RESPONSE,
-    },
-    {
-      id: 7,
-      msg: 'Perfect. What about infinite scroll / pagination?',
-      type: SENT,
-    },
-    {
-      id: 8,
-      msg: 'Use `onEndReached` and `onEndReachedThreshold` props. Set threshold to `0.5` so it triggers when user is halfway to the bottom, then fetch the next page in the callback.',
-      type: RESPONSE,
-    }, */
-  ];
-  const [MessageList, setMessageList] = useState<MessageProps[]>(messageList);
+  ]);
+  const [MsgInput, setMsgInput] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const insets = useSafeAreaInsets();
   const keyboardOffset = IS_IOS ? insets.top : StatusBar.currentHeight ?? 0;
+  const flatListRef = useRef<FlatList>(null);
 
-  const [MsgInput, setMsgInput] = useState<string>('');
+  const onResponseReceived = (response: string) => {
+    setMessageList(prev => [
+      ...prev,
+      {
+        id: prev.length + 1,
+        msg: response,
+        type: RESPONSE,
+        isNew: true,
+      },
+    ]);
+  };
 
-  const onSentMsgPress = () => {
+  const onSentMsgPress = async () => {
+    if (!MsgInput.trim() || isLoading) return;
+
+    const userMsg = MsgInput;
+    setMsgInput('');
+
+    // UI mein user message add karo
+    setMessageList(prev => [
+      ...prev,
+      {
+        id: prev.length + 1,
+        msg: userMsg,
+        type: SENT,
+      },
+    ]);
+
+    // History mein user message add karo
+    const updatedHistory: GroqMessage[] = [
+      ...chatHistory,
+      { role: 'user', content: userMsg },
+    ];
+    setChatHistory(updatedHistory);
+
+    setIsLoading(true);
+
     try {
-      console.log('user message', MsgInput);
-      setMessageList(prevMessageList => {
-        console.log(prevMessageList);
-        return [
-          ...prevMessageList,
-          {
-            id: prevMessageList.length + 1,
-            msg: MsgInput,
-            type: SENT,
-          },
-        ];
-      });
+      const aiResponse = await chatWithHistory(updatedHistory);
 
-      setTimeout(() => {
-        onResponseReceivedPress(
-          'Artificial Intelligence (AI) is transforming the way we live, work, and interact with technology. From smart assistants to medical diagnostics, AI is becoming an integral part of modern life.',
-        );
-      }, 2000);
-    } catch (error) {
-      setMsgInput('');
-      console.error(error);
+      // History mein AI response add karo
+      setChatHistory(prev => [
+        ...prev,
+        { role: 'assistant', content: aiResponse },
+      ]);
+
+      onResponseReceived(aiResponse);
+    } catch (error: any) {
+      const errMsg =
+        error.response?.status === 429
+          ? 'Rate limit ho gaya, thodi der baad try karo...'
+          : 'Kuch gadbad hui, dobara try karo.';
+      onResponseReceived(errMsg);
     } finally {
-      setMsgInput('');
+      setIsLoading(false);
     }
   };
 
-  const onResponseReceivedPress = (response: string) => {
-    setMessageList(prevMessageList => {
-      console.log(prevMessageList);
-      return [
-        ...prevMessageList,
-        {
-          id: prevMessageList.length + 1,
-          msg: response,
-          type: RESPONSE,
-          isNew: true,
-        },
-      ];
-    });
-  };
-
-  const flatListRef = useRef<FlatList>(null);
   return (
     <AppSafeView statusBarColor={AppColors.black}>
       <KeyboardAvoidingView
@@ -131,7 +111,7 @@ const ChatScreen = () => {
         keyboardVerticalOffset={keyboardOffset}
       >
         <AppHeader />
-        {/*  */}
+
         {MessageList.length > 0 ? (
           <FlatList
             ref={flatListRef}
@@ -139,35 +119,31 @@ const ChatScreen = () => {
             style={{ flex: 1 }}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => {
-              return (
-                <>
-                  {item.type === SENT ? (
-                    <SentMsgCard message={item.msg} />
-                  ) : (
-                    <ResponseMsgCard
-                      message={item.msg}
-                      animate={item.isNew ?? false}
-                      onHeightChange={() => {
-                        flatListRef.current?.scrollToEnd({ animated: false });
-                      }}
-                    />
-                  )}
-                </>
-              );
-            }}
+            renderItem={({ item }) =>
+              item.type === SENT ? (
+                <SentMsgCard message={item.msg} />
+              ) : (
+                <ResponseMsgCard
+                  message={item.msg}
+                  animate={item.isNew ?? false}
+                  onHeightChange={() => {
+                    flatListRef.current?.scrollToEnd({ animated: false });
+                  }}
+                />
+              )
+            }
             contentContainerStyle={{
               paddingHorizontal: s(5),
               paddingVertical: s(20),
             }}
             onContentSizeChange={() => {
               if (MessageList.length > 0) {
-                flatListRef.current?.scrollToEnd({ animated: true }); // ✅ naya message aate hi scroll
+                flatListRef.current?.scrollToEnd({ animated: true });
               }
             }}
             onLayout={() => {
               if (MessageList.length > 0) {
-                flatListRef.current?.scrollToEnd({ animated: false }); // ✅ pehli baar open ho toh bhi bottom pe
+                flatListRef.current?.scrollToEnd({ animated: false });
               }
             }}
           />
@@ -175,11 +151,11 @@ const ChatScreen = () => {
           <EmptyChatScreen />
         )}
 
-        {/*  */}
         <ChatInput
           requestMsg={MsgInput}
           setResponseMsg={setMsgInput}
           onSentMsgPress={onSentMsgPress}
+          disabled={isLoading}
         />
       </KeyboardAvoidingView>
     </AppSafeView>

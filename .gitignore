@@ -83,3 +83,4 @@ yarn-error.log
 ios/Pods/
 ios/*.xcconfig
 ios/chatty/GeneratedInfoPlistDotEnv.h
+ios/tmp.xcconfig

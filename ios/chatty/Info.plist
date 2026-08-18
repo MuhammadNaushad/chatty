@@ -82,5 +82,7 @@
     <string>Zocial.ttf</string>
     <string>Fontisto.ttf</string>
   </array>
+  <key>GMSApiKey</key>
+  <string>$(GOOGLE_MAPS_API_KEY)</string>
 </dict>
 </plist>

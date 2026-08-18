@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
 
-  func application(
+func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
@@ -23,10 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     reactNativeDelegate = delegate
     reactNativeFactory = factory
-    GMSServices.provideAPIKey("AIzaSyCJnVMeWy5uAvIVtOXenF4fdKbMNeoA_Eo") 
-  // Add me --- \/
+
+    let mapsApiKey = Bundle.main.object(forInfoDictionaryKey: "GMSApiKey") as? String ?? ""
+    GMSServices.provideAPIKey(mapsApiKey)
+
     FirebaseApp.configure()
-  // Add me --- /\
+
     window = UIWindow(frame: UIScreen.main.bounds)
 
     factory.startReactNative(
@@ -36,8 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     return true
-  }
-}
+  }  
+} 
 
 class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
   override func sourceURL(for bridge: RCTBridge) -> URL? {
